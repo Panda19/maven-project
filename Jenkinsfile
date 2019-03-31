@@ -26,7 +26,7 @@ stages{
                     }
                 }
 
-                stage ("Deploy to Production"){
+                stage ("Deploy to Production Env"){
                     steps {
                         sh "mvn -h"
                     }
