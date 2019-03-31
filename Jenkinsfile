@@ -13,29 +13,20 @@ pipeline {
                 }
             }
         }    
-        stage ('Deploy to staging'){
-            steps {
-                build job: 'deploytostaging'
+        stage ('Deployments'){
+            parrallel{
+                stage ('Deploy to Staging') {
+                    steps {
+                     sh "mvn --version"
+                    }
+                }
+            
+                 stage ('deploytoprod'){
+                    steps{
+                      sh "mvn -h"
+                    }
+                 }
             }
         }
-        
-        stage ('deploytoprod'){
-            steps{
-                timeout(time:5, unit:'DAYS'){
-                  input message: 'Approve Prod Release?'
-                }
-                
-                build job: 'deploytoprod'
-            }
-            post {
-                success {
-                    echo 'code dpely to prod'
-                }
-                
-                failure {
-                    echo 'deloyment failed'
-                }
-            }
-        }
-    }
+     }
 }
